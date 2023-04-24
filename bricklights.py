@@ -17,12 +17,28 @@ class Flame:
         if self.time % self.delay == 0:
             self.light.on(randint(self.intensity-25,self.intensity))
 
-flame1 = Flame(Port.A)
-flame2 = Flame(Port.C)
-flame3 = Flame(Port.E)
+class Fader:
+    def __init__(self, port, speed=1, intensity=100):
+        self.light = Light(port)
+        self.speed = speed
+        self.intensity = intensity
+        self.time = 0
+
+    def update(self):
+        self.time += 1
+
+        step = (self.time*self.speed) % 200
+
+        brightness = step if step < 100 else 200 - step
+
+        self.light.on(brightness*self.intensity/100)
+
+light1 = Flame(Port.A)
+light2 = Flame(Port.C)
+light3 = Fader(Port.E, speed=.1)
 
 while(1):
     wait(10)
-    flame1.update()
-    flame2.update()
-    flame3.update()
+    light1.update()
+    light2.update()
+    light3.update()
