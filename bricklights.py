@@ -14,6 +14,10 @@ class ManagedLight:
     def update(self):
         self.time += 1
 
+class Steady(ManagedLight):
+    def update(self):
+        self.light.on(self.intensity*100)
+
 class Flame(ManagedLight):
     def update(self):
         super().update()
@@ -32,7 +36,7 @@ class Fader(ManagedLight):
         self.light.on(brightness*self.intensity)
 
 light1 = Flame(Port.A)
-light2 = Flame(Port.C)
+light2 = Steady(Port.C)
 light3 = Fader(Port.E, speed=.1)
 
 while(1):
