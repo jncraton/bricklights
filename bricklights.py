@@ -4,11 +4,25 @@ from pybricks.tools import wait
 
 from urandom import randint
 
-def update_flame(light):
-    wait(75)
-    light.on(randint(10,30))
+class Flame:
+    def __init__(self, port, delay=8, intensity=30):
+        self.light = Light(port)
+        self.delay = delay
+        self.intensity = intensity
+        self.time = 0
 
-light = Light(Port.A)
+    def update(self):
+        self.time += 1
 
-while True:
-    update_flame(light)
+        if self.time % self.delay == 0:
+            self.light.on(randint(self.intensity-25,self.intensity))
+
+flame1 = Flame(Port.A)
+flame2 = Flame(Port.C)
+flame3 = Flame(Port.E)
+
+while(1):
+    wait(10)
+    flame1.update()
+    flame2.update()
+    flame3.update()
