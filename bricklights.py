@@ -5,11 +5,11 @@ from pybricks.tools import wait
 from urandom import randint
 
 class ManagedLight:
-    def __init__(self, port, speed=1.0, intensity=1.0):
+    def __init__(self, port, speed=1.0, intensity=1.0, time_offset=0):
         self.light = Light(port)
         self.speed = speed
         self.intensity = intensity
-        self.time = 0
+        self.time = time_offset
 
     def update(self):
         self.time += self.speed
@@ -36,7 +36,7 @@ class Fader(ManagedLight):
         self.light.on(brightness*self.intensity)
 
 light1 = Flame(Port.A)
-light2 = Steady(Port.C)
+light2 = Fader(Port.C, time_offset=100, speed=.1)
 light3 = Fader(Port.E, speed=.1)
 
 while(1):
