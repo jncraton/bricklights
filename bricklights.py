@@ -11,16 +11,19 @@ class ManagedLight:
         self.intensity = intensity
         self.time = 0
 
-class Flame(ManagedLight):
     def update(self):
         self.time += 1
+
+class Flame(ManagedLight):
+    def update(self):
+        super().update()
 
         if self.time % 8*self.speed == 0:
             self.light.on(randint(int(self.intensity*100-25),int(self.intensity*100)))
 
 class Fader(ManagedLight):
     def update(self):
-        self.time += 1
+        super().update()
 
         step = (self.time*self.speed) % 200
 
