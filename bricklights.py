@@ -23,7 +23,7 @@ class Flame(ManagedLight):
         super().update()
 
         if self.time % 8 == 0:
-            self.light.on(randint(int(self.intensity*100-25),int(self.intensity*100)))
+            self.light.on(self.intensity*randint(25, 100))
 
 class Fader(ManagedLight):
     def update(self):
