@@ -14,7 +14,7 @@ class ManagedLight:
     def update(self):
         self.time += 10
         if self.time > self.period:
-            self.time -= self.period
+            self.time = 0
 
 class Steady(ManagedLight):
     def update(self):
@@ -24,7 +24,7 @@ class Flame(ManagedLight):
     def update(self):
         super().update()
 
-        if self.time % self.period == 0:
+        if self.time == 0:
             self.light.on(self.intensity*randint(25, 100))
 
 class Fader(ManagedLight):
