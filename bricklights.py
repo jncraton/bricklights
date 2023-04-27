@@ -3,7 +3,6 @@ from pybricks.parameters import Port
 from pybricks.tools import wait
 
 from urandom import randint
-from umath import floor
 
 class ManagedLight:
     def __init__(self, port, period=1000, intensity=1.0, time_offset=0):
@@ -47,10 +46,9 @@ class Lerp(ManagedLight):
         super().update()
 
         # Calculate current keyframe
-        n = floor(self.time / self.period)
+        n = int(self.time / self.period) % len(self.keyframes)
 
-        weight = (self.time / self.period) - n
-        n = n %len(self.keyframes)
+        weight = (self.time / self.period) % 1
 
         current = self.keyframes[n]
         upcoming = self.keyframes[(n+1)%len(self.keyframes)]
