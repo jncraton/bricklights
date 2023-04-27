@@ -59,7 +59,7 @@ class Lerp(ManagedLight):
         self.light.on(intensity)
     
 lights = [
-    Lerp(Port.A, keyframes=[0,100,0,0.0,0], period=15000),
+    Lerp(Port.A, keyframes=[0,100,0,0,0,0], period=15000),
     Lerp(Port.C, keyframes=[0,0,0,100,0,0], period=15000),
     Lerp(Port.E, keyframes=[0,0,0,0,0,100], period=15000),
     Flame(Port.B, period=80),
