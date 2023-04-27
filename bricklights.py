@@ -47,7 +47,6 @@ class Lerp(ManagedLight):
     def update(self):
         super().update()
 
-        # Calculate current keyframe
         n_float = len(self.keyframes) * self.time / self.period
         n = int(n_float) % len(self.keyframes)
         weight = n_float % 1
@@ -56,17 +55,19 @@ class Lerp(ManagedLight):
         upcoming = self.keyframes[(n+1)%len(self.keyframes)]
 
         intensity = (1-weight)*current+(weight)*upcoming
-        print(n, self.time, weight, intensity)
 
         self.light.on(intensity)
     
-
-light1 = Flame(Port.A, period=80)
-light2 = Fader(Port.C, time_offset=5000, period=10000)
-light3 = Lerp(Port.E, keyframes=[0,100,100], period=1000)
+lights = [
+    Lerp(Port.A, keyframes=[0,100,0,0.0,0], period=15000),
+    Lerp(Port.C, keyframes=[0,0,0,100,0,0], period=15000),
+    Lerp(Port.E, keyframes=[0,0,0,0,0,100], period=15000),
+    Flame(Port.B, period=80),
+    Flame(Port.D, period=80),
+    Flame(Port.F, period=80),
+]
 
 while(1):
     wait(10)
-    light1.update()
-    light2.update()
-    light3.update()
+    for light in lights:
+        light.update()
