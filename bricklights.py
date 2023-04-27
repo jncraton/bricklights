@@ -3,6 +3,7 @@ from pybricks.parameters import Port
 from pybricks.tools import wait
 
 from urandom import randint
+from umath import floor
 
 class ManagedLight:
     def __init__(self, port, period=1000, intensity=1.0, time_offset=0):
@@ -35,9 +36,34 @@ class Fader(ManagedLight):
 
         self.light.on((100/self.period)*brightness*self.intensity)
 
+class Lerp(ManagedLight):
+    def __init__(self, port, period=1000, keyframes=[0,100], time_offset=0):
+        self.light = Light(port)
+        self.period = period
+        self.time = time_offset
+        self.keyframes = keyframes
+
+    def update(self):
+        super().update()
+
+        # Calculate current keyframe
+        n = floor(self.time / self.period)
+
+        weight = (self.time / self.period) - n
+        n = n %len(self.keyframes)
+
+        current = self.keyframes[n]
+        upcoming = self.keyframes[(n+1)%len(self.keyframes)]
+
+        intensity = ((1-weight)*current+(weight)*upcoming)/2
+        print(n, weight, intensity)
+
+        self.light.on(intensity)
+    
+
 light1 = Flame(Port.A, period=80)
 light2 = Fader(Port.C, time_offset=5000, period=10000)
-light3 = Fader(Port.E, period=10000)
+light3 = Lerp(Port.E, keyframes=[0,100,100], period=1000)
 
 while(1):
     wait(10)
