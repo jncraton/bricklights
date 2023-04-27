@@ -55,7 +55,7 @@ class Lerp(ManagedLight):
         current = self.keyframes[n]
         upcoming = self.keyframes[(n+1)%len(self.keyframes)]
 
-        intensity = ((1-weight)*current+(weight)*upcoming)/2
+        intensity = (1-weight)*current+(weight)*upcoming
         print(n, weight, intensity)
 
         self.light.on(intensity)
