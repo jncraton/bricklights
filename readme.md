@@ -1,4 +1,4 @@
 Bricklights
 ===========
 
-A Pybricks-based lighting controller for LEGO models.
+A [Pybricks](https://pybricks.com/)-based lighting controller for LEGO models.
