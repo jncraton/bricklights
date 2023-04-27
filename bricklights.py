@@ -13,6 +13,8 @@ class ManagedLight:
 
     def update(self):
         self.time += 10
+        if self.time > self.period:
+            self.time -= self.period
 
 class Steady(ManagedLight):
     def update(self):
