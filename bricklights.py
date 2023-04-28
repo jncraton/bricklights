@@ -55,3 +55,19 @@ class Lerp(ManagedLight):
         intensity = (1-weight)*current+(weight)*upcoming
 
         self.light.on(intensity)
+
+class Crossfader():
+    def __init__(self, ports, period):
+        self.period = period
+
+        self.lights = []
+
+        for i, port in enumerate(ports):
+            keyframes = [0] * len(ports) * 2
+            keyframes[i*2] = 100
+
+            self.lights.append(Lerp(port, keyframes=keyframes, period=self.period))
+
+    def update(self):
+        for light in self.lights:
+            light.update()
