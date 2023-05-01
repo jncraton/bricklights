@@ -10,7 +10,7 @@ lights = [
     Flame(Port.F, period=50),
 ]
 
-while(1):
+while 1:
     wait(10)
     for light in lights:
         light.update()
