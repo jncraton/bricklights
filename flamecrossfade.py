@@ -1,7 +1,7 @@
 from pybricks.parameters import Port
 from pybricks.tools import wait
 
-from bricklights import Lerp, Flame, Crossfader
+from bricklights import Flame, Crossfader
 
 lights = [
     Crossfader([Port.A, Port.C, Port.E], period=30000),
