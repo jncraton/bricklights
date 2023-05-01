@@ -42,9 +42,7 @@ class Fader(ManagedLight):
 
 class Lerp(ManagedLight):
     def __init__(self, port, period=1000, keyframes=[0, 100]):
-        self.light = Light(port)
-        self.period = period
-        self.time = 0
+        super().__init__(port, period, 1.0)
         self.keyframes = keyframes
 
     def update(self):
