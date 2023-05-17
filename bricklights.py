@@ -22,11 +22,16 @@ class Steady(ManagedLight):
 
 
 class Flame(ManagedLight):
+    def __init__(self, port, period=120, intensity=1.0):
+        super().__init__(port, period, intensity)
+        self.time = (randint(0,100) * 10) % self.period
+
+
     def update(self):
         super().update()
 
         if self.time == 0:
-            self.light.on(self.intensity * randint(25, 100))
+            self.light.on(self.intensity * randint(80, 100))
 
 
 class Fader(ManagedLight):
