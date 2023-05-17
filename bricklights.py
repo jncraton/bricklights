@@ -1,4 +1,5 @@
 from pybricks.pupdevices import Light
+from pybricks.parameters import Color
 
 from urandom import randint
 
@@ -80,3 +81,20 @@ class Crossfader:
     def update(self):
         for light in self.lights:
             light.update()
+
+
+class RGBFlame(ManagedLight):
+    def __init__(self, light, color, period=120):
+        self.light = light
+        self.color = color
+        self.period = period
+        self.time = (randint(0,100) * 10) % self.period
+
+    def update(self):
+        super().update()
+
+        if self.time == 0:
+            print(self.color, self.light)
+            self.light.on(Color(self.color.h, 
+                                self.color.s, 
+                                self.color.v - randint(0, 20)))
