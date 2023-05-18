@@ -26,19 +26,6 @@ class Steady(ManagedLight):
         self.light.on(self.intensity * 100)
 
 
-class Fader(ManagedLight):
-    """A light that fades on and off"""
-
-    def update(self):
-        super().update()
-
-        step = self.stopwatch.time() % self.period
-
-        brightness = step if step < self.period / 2 else self.period - step
-
-        self.light.on((100 / self.period) * brightness * self.intensity)
-
-
 class Lerp(ManagedLight):
     """A light that fades between values"""
 
@@ -59,6 +46,12 @@ class Lerp(ManagedLight):
         intensity = (1 - weight) * current + (weight) * upcoming
 
         self.light.on(intensity)
+
+
+class Fader(Lerp):
+    """A light that fades on and off"""
+    def __init__(self, port, period=1000, intensity=1.0):
+        super().__init__(port, period, [0, 100*intensity])
 
 
 class Crossfader:
