@@ -5,3 +5,6 @@ lint:
 
 format:
 	black *.py
+
+clean:
+	rm -rf __pycache__
