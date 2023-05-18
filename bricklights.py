@@ -27,7 +27,12 @@ class Steady(ManagedLight):
 
 
 class Lerp(ManagedLight):
-    """A light that fades between values"""
+    """A light that fades between values
+
+    This provides a high degree of control over a light pattern.
+
+    Patterns are defined using a series of keyframes of varying intensities.
+    """
 
     def __init__(self, port, period=1000, keyframes=[0, 100]):
         super().__init__(port, period, 1.0)
@@ -50,9 +55,8 @@ class Lerp(ManagedLight):
 
 class Fader(Lerp):
     """A light that fades on and off"""
-
     def __init__(self, port, period=1000, intensity=1.0):
-        super().__init__(port, period, [0, 100 * intensity])
+        super().__init__(port, period, [0, 100*intensity])
 
 
 class Crossfader:
