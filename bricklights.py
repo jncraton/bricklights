@@ -57,14 +57,14 @@ class Fader(Lerp):
 class Crossfader:
     """A set of lights that fade in and out in sequence"""
 
-    def __init__(self, ports, period):
+    def __init__(self, ports, period, intensity=1.0):
         self.period = period
 
         self.lights = []
 
         for i, port in enumerate(ports):
             keyframes = [0] * len(ports) * 2
-            keyframes[i * 2] = 100
+            keyframes[i * 2] = 100 * intensity
 
             self.lights.append(Lerp(port, keyframes=keyframes, period=self.period))
 
