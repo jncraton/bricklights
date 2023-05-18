@@ -13,4 +13,4 @@ lights = [
 while 1:
     wait(10)
     for light in lights:
-        light.update()
+        light.update(10)
