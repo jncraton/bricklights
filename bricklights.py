@@ -34,7 +34,7 @@ class Lerp(ManagedLight):
     Patterns are defined using a series of keyframes of varying intensities.
     """
 
-    def __init__(self, port, period=1000, keyframes=[0, 100]):
+    def __init__(self, port, period=1000, keyframes=[0, 1.0]):
         super().__init__(port, period, 1.0)
         self.keyframes = keyframes
 
@@ -50,7 +50,7 @@ class Lerp(ManagedLight):
 
         intensity = (1 - weight) * current + (weight) * upcoming
 
-        self.light.on(intensity)
+        self.light.on(100*intensity)
 
 
 class Fader(Lerp):
