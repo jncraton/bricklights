@@ -27,10 +27,10 @@ class Flame(ManagedLight):
         super().__init__(port, period, intensity)
 
     def update(self):
-        super().update()
-
-        if self.stopwatch.time() == 0:
+        if randint(0, self.period) < self.stopwatch.time():
             self.light.on(self.intensity * randint(80, 100))
+
+        self.stopwatch.reset()
 
 
 class Fader(ManagedLight):
@@ -88,9 +88,9 @@ class RGBFlame(ManagedLight):
         self.period = period
 
     def update(self):
-        super().update()
-
-        if self.stopwatch.time() == 0:
+        if randint(0, self.period) < self.stopwatch.time():
             self.light.on(
                 Color(self.color.h, self.color.s, self.color.v - randint(0, 20))
             )
+
+        self.stopwatch.reset()
