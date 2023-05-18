@@ -1,5 +1,6 @@
 from pybricks.pupdevices import Light
 from pybricks.parameters import Color
+from pybricks.tools import StopWatch
 
 from urandom import randint
 
@@ -9,12 +10,11 @@ class ManagedLight:
         self.light = Light(port)
         self.period = period
         self.intensity = intensity
-        self.time = 0
+        self.stopwatch = StopWatch()
 
-    def update(self, elapsed):
-        self.time += elapsed
-        if self.time > self.period:
-            self.time = 0
+    def update(self):
+        if self.stopwatch.time() > self.period:
+            self.stopwatch.reset()
 
 
 class Steady(ManagedLight):
@@ -25,20 +25,19 @@ class Steady(ManagedLight):
 class Flame(ManagedLight):
     def __init__(self, port, period=120, intensity=1.0):
         super().__init__(port, period, intensity)
-        self.time = (randint(0, 100) * 10) % self.period
 
-    def update(self, elapsed):
-        super().update(elapsed)
+    def update(self):
+        super().update()
 
-        if self.time == 0:
+        if self.stopwatch.time() == 0:
             self.light.on(self.intensity * randint(80, 100))
 
 
 class Fader(ManagedLight):
-    def update(self, elapsed):
-        super().update(elapsed)
+    def update(self):
+        super().update()
 
-        step = self.time % self.period
+        step = self.stopwatch.time() % self.period
 
         brightness = step if step < self.period / 2 else self.period - step
 
@@ -50,10 +49,10 @@ class Lerp(ManagedLight):
         super().__init__(port, period, 1.0)
         self.keyframes = keyframes
 
-    def update(self, elapsed):
-        super().update(elapsed)
+    def update(self):
+        super().update()
 
-        n_float = len(self.keyframes) * self.time / self.period
+        n_float = len(self.keyframes) * self.stopwatch.time() / self.period
         n = int(n_float) % len(self.keyframes)
         weight = n_float % 1
 
@@ -77,9 +76,9 @@ class Crossfader:
 
             self.lights.append(Lerp(port, keyframes=keyframes, period=self.period))
 
-    def update(self, elapsed):
+    def update(self):
         for light in self.lights:
-            light.update(elapsed)
+            light.update()
 
 
 class RGBFlame(ManagedLight):
@@ -87,12 +86,11 @@ class RGBFlame(ManagedLight):
         self.light = light
         self.color = color
         self.period = period
-        self.time = (randint(0, 100) * 10) % self.period
 
-    def update(self, elapsed):
-        super().update(elapsed)
+    def update(self):
+        super().update()
 
-        if self.time == 0:
+        if self.stopwatch.time() == 0:
             self.light.on(
                 Color(self.color.h, self.color.s, self.color.v - randint(0, 20))
             )
