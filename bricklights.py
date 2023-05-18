@@ -57,7 +57,7 @@ class Fader(Lerp):
     """A light that fades on and off"""
 
     def __init__(self, port, period=1000, intensity=1.0):
-        super().__init__(port, period, [0, 100 * intensity])
+        super().__init__(port, period, [0, intensity])
 
 
 class Crossfader:
@@ -70,7 +70,7 @@ class Crossfader:
 
         for i, port in enumerate(ports):
             keyframes = [0] * len(ports) * 2
-            keyframes[i * 2] = 100 * intensity
+            keyframes[i * 2] = intensity
 
             self.lights.append(Lerp(port, keyframes=keyframes, period=self.period))
 
