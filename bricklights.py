@@ -6,6 +6,8 @@ from urandom import randint
 
 
 class ManagedLight:
+    """Manages various types of lights supported by the module"""
+
     def __init__(self, port, period=1000, intensity=1.0):
         self.light = Light(port)
         self.period = period
@@ -18,11 +20,15 @@ class ManagedLight:
 
 
 class Steady(ManagedLight):
+    """A light that stays on"""
+
     def update(self):
         self.light.on(self.intensity * 100)
 
 
 class Fader(ManagedLight):
+    """A light that fades on and off"""
+
     def update(self):
         super().update()
 
@@ -34,6 +40,8 @@ class Fader(ManagedLight):
 
 
 class Lerp(ManagedLight):
+    """A light that fades between values"""
+
     def __init__(self, port, period=1000, keyframes=[0, 100]):
         super().__init__(port, period, 1.0)
         self.keyframes = keyframes
@@ -54,6 +62,8 @@ class Lerp(ManagedLight):
 
 
 class Crossfader:
+    """A set of lights that fade in and out in sequence"""
+
     def __init__(self, ports, period):
         self.period = period
 
@@ -71,6 +81,8 @@ class Crossfader:
 
 
 class Flame(ManagedLight):
+    """A light that flickers randomly like a flame"""
+
     def __init__(self, port, period=120, intensity=1.0):
         super().__init__(port, period, intensity)
 
@@ -82,6 +94,8 @@ class Flame(ManagedLight):
 
 
 class RGBFlame(ManagedLight):
+    """An RGB light that flickers randomly like a flame"""
+
     def __init__(self, light, color, period=120):
         self.light = light
         self.color = color
