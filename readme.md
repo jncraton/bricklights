@@ -8,7 +8,7 @@ A [Pybricks](https://pybricks.com/)-based lighting controller for LEGO models.
 Installation
 ------------
 
-Include bricklights.py in your PyBricks project.
+Include bricklights.py in your Pybricks project.
 
 Usage
 -----
