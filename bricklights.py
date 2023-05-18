@@ -22,17 +22,6 @@ class Steady(ManagedLight):
         self.light.on(self.intensity * 100)
 
 
-class Flame(ManagedLight):
-    def __init__(self, port, period=120, intensity=1.0):
-        super().__init__(port, period, intensity)
-
-    def update(self):
-        if randint(0, self.period) < self.stopwatch.time():
-            self.light.on(self.intensity * randint(80, 100))
-
-        self.stopwatch.reset()
-
-
 class Fader(ManagedLight):
     def update(self):
         super().update()
@@ -79,6 +68,17 @@ class Crossfader:
     def update(self):
         for light in self.lights:
             light.update()
+
+
+class Flame(ManagedLight):
+    def __init__(self, port, period=120, intensity=1.0):
+        super().__init__(port, period, intensity)
+
+    def update(self):
+        if randint(0, self.period) < self.stopwatch.time():
+            self.light.on(self.intensity * randint(80, 100))
+
+        self.stopwatch.reset()
 
 
 class RGBFlame(ManagedLight):
