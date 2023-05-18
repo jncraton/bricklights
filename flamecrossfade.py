@@ -1,16 +1,14 @@
 from pybricks.parameters import Port
-from pybricks.tools import wait
 
-from bricklights import Flame, Crossfader
+from bricklights import Flame, Crossfader, Fader, Lerp
 
 lights = [
-    Crossfader([Port.A, Port.C, Port.E], period=30000),
-    Flame(Port.B, period=50),
-    Flame(Port.D, period=50),
-    Flame(Port.F, period=50),
+    Crossfader([Port.A, Port.C, Port.E], period=30000, intensity=0.6),
+    Flame(Port.B, period=120, intensity=1.0),
+    Lerp(Port.D, period=1000, keyframes=[0, 5, 20, 100, 20, 5]),
+    Fader(Port.F, period=1000, intensity=0.5),
 ]
 
-while 1:
-    wait(10)
+while True:
     for light in lights:
-        light.update(10)
+        light.update()

@@ -50,8 +50,9 @@ class Lerp(ManagedLight):
 
 class Fader(Lerp):
     """A light that fades on and off"""
+
     def __init__(self, port, period=1000, intensity=1.0):
-        super().__init__(port, period, [0, 100*intensity])
+        super().__init__(port, period, [0, 100 * intensity])
 
 
 class Crossfader:
