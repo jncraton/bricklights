@@ -93,7 +93,6 @@ class RGBFlame(ManagedLight):
         super().update()
 
         if self.time == 0:
-            print(self.color, self.light)
             self.light.on(
                 Color(self.color.h, self.color.s, self.color.v - randint(0, 20))
             )
