@@ -11,8 +11,8 @@ class ManagedLight:
         self.intensity = intensity
         self.time = 0
 
-    def update(self):
-        self.time += 10
+    def update(self, elapsed):
+        self.time += elapsed
         if self.time > self.period:
             self.time = 0
 
@@ -27,16 +27,16 @@ class Flame(ManagedLight):
         super().__init__(port, period, intensity)
         self.time = (randint(0, 100) * 10) % self.period
 
-    def update(self):
-        super().update()
+    def update(self, elapsed):
+        super().update(elapsed)
 
         if self.time == 0:
             self.light.on(self.intensity * randint(80, 100))
 
 
 class Fader(ManagedLight):
-    def update(self):
-        super().update()
+    def update(self, elapsed):
+        super().update(elapsed)
 
         step = self.time % self.period
 
@@ -50,8 +50,8 @@ class Lerp(ManagedLight):
         super().__init__(port, period, 1.0)
         self.keyframes = keyframes
 
-    def update(self):
-        super().update()
+    def update(self, elapsed):
+        super().update(elapsed)
 
         n_float = len(self.keyframes) * self.time / self.period
         n = int(n_float) % len(self.keyframes)
@@ -77,9 +77,9 @@ class Crossfader:
 
             self.lights.append(Lerp(port, keyframes=keyframes, period=self.period))
 
-    def update(self):
+    def update(self, elapsed):
         for light in self.lights:
-            light.update()
+            light.update(elapsed)
 
 
 class RGBFlame(ManagedLight):
@@ -89,8 +89,8 @@ class RGBFlame(ManagedLight):
         self.period = period
         self.time = (randint(0, 100) * 10) % self.period
 
-    def update(self):
-        super().update()
+    def update(self, elapsed):
+        super().update(elapsed)
 
         if self.time == 0:
             self.light.on(
